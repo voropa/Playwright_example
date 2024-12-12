@@ -11,6 +11,7 @@ on:
         browser:
           type: choice
           description: Choose a browser
+          default: chrome
           options: 
           - chrome
           - firefox
