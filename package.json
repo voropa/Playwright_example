@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test:chrome": "npx playwright test --project chromium",
-    "test:firefox": "npx playwright test --project firefox",
+    "test:firefox": "npx playwright test --project firefox"
   },
   "keywords": [],
   "author": "Oleg Voropaev",
