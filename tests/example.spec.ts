@@ -27,6 +27,6 @@ test.describe('Desc1', () => {
     await page.getByRole('link', { name: 'API', exact: true }).click();
 
     // Expects page to have a heading with the name of Installation.
-    await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Installation1' })).toBeVisible();
   });
 });
