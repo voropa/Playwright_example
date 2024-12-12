@@ -4,7 +4,7 @@ test.describe('Desc1', () => {
 
   test.skip('has title', async ({ page }) => {
     await page.goto('https://playwright.dev/');
-    await page.locator('div').filter({ hasText: 'qweasdasdasd' }).nth(3).click(); //driver.findElements(By./css(#qwe)).click();
+    await page.locator('div').filter({ hasText: 'qweasdasda123123sd' }).nth(3).click(); //driver.findElements(By./css(#qwe)).click();
 
     expect(await page.getByRole('option').allTextContents()).toEqual(["qwe", 'asd', 'zxc']);
 
