@@ -28,4 +28,5 @@ jobs:
       uses: browser-actions/setup-chrome@v1.7.2
       
     - run: npm install
+    - run: npx playwright install
     - run: npm test
