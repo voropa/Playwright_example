@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "npx playwright test"
+    "test:chrome": "npx playwright test --project chromium",
+    "test:firefox": "npx playwright test --project firefox",
   },
   "keywords": [],
   "author": "Oleg Voropaev",
