@@ -2,7 +2,9 @@
   "name": "playwright_example",
   "version": "1.0.0",
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test"
+  },
   "keywords": [],
   "author": "Oleg Voropaev",
   "license": "ISC",
