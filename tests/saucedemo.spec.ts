@@ -1,53 +1,60 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from './pages/LoginPage';
+import { InventoryPage } from './pages/InventoryPage';
+import { CartPage } from './pages/CartPage';
+import { CheckoutStepOnePage } from './pages/CheckoutStepOnePage';
+import { CheckoutStepTwoPage } from './pages/CheckoutStepTwoPage';
+import { CheckoutCompletePage } from './pages/CheckoutCompletePage';
 
-test.describe('SauceDemo E2E Test', () => {
+test.describe('SauceDemo E2E Test with POM', () => {
   test('should complete the full checkout flow', async ({ page }) => {
-    // Navigate to the SauceDemo website
-    await page.goto('https://www.saucedemo.com/');
+    const loginPage = new LoginPage(page);
+    const inventoryPage = new InventoryPage(page);
+    const cartPage = new CartPage(page);
+    const checkoutStepOnePage = new CheckoutStepOnePage(page);
+    const checkoutStepTwoPage = new CheckoutStepTwoPage(page);
+    const checkoutCompletePage = new CheckoutCompletePage(page);
 
-    // Log in with valid credentials
-    await page.fill('#user-name', 'standard_user');
-    await page.fill('#password', 'secret_sauce');
-    await page.click('#login-button');
+    // Navigate to the SauceDemo website and log in
+    await loginPage.goto();
+    await loginPage.login('standard_user', 'secret_sauce');
 
     // Verify successful login by checking the URL
     await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
 
     // Add a product to the cart
-    await page.click('.btn_inventory'); // Clicks the first "Add to cart" button
-    await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+    await inventoryPage.addItemToCartByName('Sauce Labs Backpack');
+    await expect(inventoryPage.shoppingCartBadge).toHaveText('1');
 
     // Navigate to the cart page
-    await page.click('.shopping_cart_link');
+    await inventoryPage.goToCart();
 
     // Verify that the correct page is loaded
     await expect(page).toHaveURL('https://www.saucedemo.com/cart.html');
 
     // Proceed to checkout
-    await page.click('#checkout');
+    await cartPage.goToCheckout();
 
     // Verify that the checkout information page is loaded
     await expect(page).toHaveURL('https://www.saucedemo.com/checkout-step-one.html');
 
     // Fill in shipping information
-    await page.fill('#first-name', 'John');
-    await page.fill('#last-name', 'Doe');
-    await page.fill('#postal-code', '12345');
+    await checkoutStepOnePage.fillShippingInformation('John', 'Doe', '12345');
 
     // Continue to the next step
-    await page.click('#continue');
+    await checkoutStepOnePage.continueToNextStep();
 
     // Verify that the checkout overview page is loaded
     await expect(page).toHaveURL('https://www.saucedemo.com/checkout-step-two.html');
 
     // Finish the purchase
-    await page.click('#finish');
+    await checkoutStepTwoPage.finishCheckout();
 
     // Verify that the order confirmation page is loaded
     await expect(page).toHaveURL('https://www.saucedemo.com/checkout-complete.html');
 
     // Check for the "THANK YOU FOR YOUR ORDER" message
-    const thankYouMessage = await page.locator('.complete-header').textContent();
+    const thankYouMessage = await checkoutCompletePage.getCompleteHeaderText();
     expect(thankYouMessage).toBe('Thank you for your order!');
   });
 });
